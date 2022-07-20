@@ -1,10 +1,10 @@
 console.log(document.getElementById("parrafo1"))
 const parrafo1 = document.getElementById("parrafo1")
 
+let productoABuscar = prompt("Ingrese un producto de nuestro stock, tal cual este escrito, para consultar por su marca, precio y stock: Auricular, Monitor, Mouse, Teclado y/o Mousepad").toUpperCase()
 let nombreUser = prompt("Ingrese su nombre")
 let apellidoUser = prompt("Ingrese su apellido")
 let valorPrestamo = 0 
-let productoABuscar = prompt("Ingrese un producto de nuestro stock, tal cual este escrito, para consultar por su marca, precio y stock: Auricular, Monitor, Mouse, Teclado y/o Mousepad").toUpperCase()
 let pregunta, saludos, respuesta, continua
 
 do{
@@ -213,8 +213,8 @@ form.addEventListener("submit", (event) => {
     let email = document.getElementById("idEmail").value
     let password = document.getElementById("idPassword").value
 
-    const usuarios = new Usuario (username, email, password)
-    usuarios.push(usuarios)
+    const usuario = new Usuario (username, email, password)
+    usuarios.push(usuario)
     console.log(usuarios)
 
     form.reset() 
