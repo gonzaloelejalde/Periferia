@@ -13,9 +13,8 @@
 h1{
     margin-bottom: 50px;
     text-decoration: underline;
-    background-color: white;
-    margin-left: 45%;
-    margin-right: 47%;
+    display: flex;
+    justify-content: center;
 }
 
 img{
@@ -25,8 +24,6 @@ img{
 
 #parrafo1{
     margin-left: 30px;
-    background-color: white;
-    margin-right: 85%;
 }
 
 #idBoton{
@@ -51,18 +48,38 @@ img{
     flex-wrap: wrap;
     justify-content: center;
     margin-bottom: 5px;
-    background-color: white;
-    margin-left: 48%;
-    margin-right: 47%;
 }
 
 .color{
     margin-left: 30px;
-    background-color: white;
-    margin-right: 74%;
 }
 
-.form-label{
+body{
     background-color: white;
-    margin-right: 75%;
+    color: black;
+    transition: ease 1s;
+}
+
+.darkMode {
+    background-color: black;
+    color: white;
+}
+
+.dropdown{
+    margin-left: 30px;
+    margin-bottom: 10px;
+}
+
+
+.card{
+    color: black;
+    background-color: aquamarine;
+}
+
+.btn-danger{
+    margin: 10px;
+}
+
+.btn-dark{
+    margin: 10px;
 }

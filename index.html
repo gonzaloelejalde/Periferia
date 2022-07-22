@@ -12,14 +12,38 @@
     
     <h1>Periferia</h1>
         
-    <div class = "parrafos">
-        <p id = "parrafo1">Hola, buenos dias</p>
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Tema
+        </button>
+        <ul class="dropdown-menu">
+            <li><button id = "botonLightMode" class = "btn btn-light">Modo Claro</button></li>
+            <li><button id = "botonDarkMode" class = "btn btn-dark">Modo Oscuro</button></li>
+        </ul>
     </div>
+
+
+        <div id = "productos" class = "row">
+
+        </div>
+
+        <div>
+            <p class = "carrito"><strong>Añadir al Carrito</strong></p>
+        </div>
+        <div class="container">
+            <form id="idFormCarrito">
+                <div class="mb-3">
+                    <label for="idProducto" class="form-label">Producto: </label>
+                    <input type="text" class="form-control" id="idProducto" name = "nombreProducto">
+                </div>
+                
+                <button type="submit" id = "botonAñadir" class="btn btn-primary">Añadir</button>
+            </form>
+        </div>
     
-    <p class = "color">Aquí puede ingresar el color que mas le guste de fondo: <input type = "color" id = "inputColor"></p> 
-
-
-    <div id = "productos" class = "row"></div>
+        <div class="container"></div>
+        <button id="botonCarrito" class="btn btn-dark">Abrir Carrito</button>
+        <div id="divCarrito" class="row"></div>
 
     <div>
         <p class = "registro"><strong>Registrarse</strong></p>
@@ -28,15 +52,15 @@
         <form id="idForm">
             <div class="mb-3">
                 <label for="idUser" class="form-label">Usuario: </label>
-                <input type="text" class="form-control" id="idUser">
+                <input type="text" class="form-control" id="idUser" name = "user">
             </div>
             <div class="mb-3">
                 <label for="idEmail" class="form-label">E-mail: </label>
-                <input type="email" class="form-control" id="idEmail">
+                <input type="email" class="form-control" id="idEmail" name = "email">
             </div>
             <div class="mb-3">
                 <label for="idPassword" class="form-label">Contraseña: </label>
-                <input type="password" class="form-control" id="idPassword">
+                <input type="password" class="form-control" id="idPassword" name = "password">
             </div>
             
             <button type="submit" id = "idBoton" class="btn btn-primary">Crear Usuario</button>
