@@ -37,8 +37,10 @@ img{
 
 .container{
     margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
 }
-
 #idMostrar{
     margin: 5px;
 }
@@ -70,7 +72,6 @@ body{
     margin-bottom: 10px;
 }
 
-
 .card{
     color: black;
     background-color: aquamarine;
@@ -83,3 +84,4 @@ body{
 .btn-dark{
     margin: 10px;
 }
+
