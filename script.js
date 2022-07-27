@@ -107,19 +107,21 @@ botonAñadirTeclado.addEventListener('click', () => {
 
 botonAñadirMousepad.addEventListener('click', () => {
 
+    divCarrito.innerHTML = ""
+
     carrito.push(producto5)
     console.log(carrito)
 
     localStorage.setItem("carrito", JSON.stringify(carrito))
 
-    divCarrito.innerHTML = ""
-
 })
-
 
 botonCarrito.addEventListener("click", () => {
 
-carrito.forEach((producto, indice) => {
+let carritoStorage = JSON.parse(localStorage.getItem("carrito"))
+divCarrito.innerHTML = ""
+
+carritoStorage.forEach((producto, indice) => {
     divCarrito.innerHTML += `<div class="card border-dark mb-3" id ="producto ${indice}" style="max-width: 20rem; margin: 4px;">
     <div class="card-header"><h2></h2>${producto.nombre}</h2></div>
     <div class="card-body"> 
@@ -128,8 +130,6 @@ carrito.forEach((producto, indice) => {
     </div>
 </div>`
 })
-
-let carritoStorage = JSON.parse(localStorage.getItem("carrito"))
 
 carritoStorage.forEach((producto, indice) => {
     let carritoBoton = document.getElementById(`producto ${indice}`).lastElementChild.lastElementChild
