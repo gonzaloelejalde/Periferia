@@ -1,22 +1,20 @@
 class Producto {
-    constructor(id, nombre, marca, precio, stock, imagen) {
+    constructor(id, nombre, marca, precio, stock, imagen, boton) {
         this.id = id
         this.nombre = nombre
         this.marca = marca
         this.precio = precio
         this.stock = stock
         this.imagen = imagen
-    }
-    mostrarMensaje() {
-        alert(`El producto seleccionado es ${productoABuscar} y sus caracteristicas son las siguientes: La marca es ${this.marca}, el precio es de ${this.precio} y nuestro stock actual es de ${this.stock}`)
+        this.boton = boton
     }
 }
 
-const producto1 = new Producto(1, "AURICULAR", "Logitech", 15000, 10, `img/auricular.png`)
-const producto2 = new Producto(2, "MONITOR", "Samsung", 30000, 15, `img/monitor.png`)
-const producto3 = new Producto(3, "MOUSE", "Redragon", 6000, 12, `img/mouse.png`)
-const producto4 = new Producto(4, "TECLADO", "Redragon", 7600, 18, `img/teclado.png`)
-const producto5 = new Producto(5, "MOUSEPAD", "Hyperx", 2000, 19, `img/mousepad.png`)
+const producto1 = new Producto(1, "AURICULAR", "Logitech", 15000, 10, `img/auricular.png`, `<button id = "boton1" >Añadir Auricular al Carrito</button>`)
+const producto2 = new Producto(2, "MONITOR", "Samsung", 30000, 15, `img/monitor.png`, `<button id = "boton2" >Añadir Monitor al Carrito</button>`)
+const producto3 = new Producto(3, "MOUSE", "Redragon", 6000, 12, `img/mouse.png`, `<button id = "boton3" >Añadir Mouse al Carrito</button>`)
+const producto4 = new Producto(4, "TECLADO", "Redragon", 7600, 18, `img/teclado.png`, `<button id = "boton4" >Añadir Teclado al Carrito</button>`)
+const producto5 = new Producto(5, "MOUSEPAD", "Hyperx", 2000, 19, `img/mousepad.png`, `<button id = "boton5" >Añadir Mousepad al Carrito</button>`)
 
 const productos = [producto1, producto2, producto3, producto4, producto5]
 
@@ -32,7 +30,7 @@ function renderizarProductos(productos) {
             <p class="card-text">Precio: $${producto.precio}</p>
             <p class="card-text">Stock: ${producto.stock}</p>
             <div class = "imagen"><img src = "${producto.imagen}"></div>
-            </div>
+            <div id = "botones" class="btn btn-primary">${producto.boton}</div>
         </div>
         </div>
         `
@@ -40,7 +38,6 @@ function renderizarProductos(productos) {
 }
 
 renderizarProductos(productos)
-
 
 let carrito = []
 
@@ -52,14 +49,11 @@ if (localStorage.getItem("carrito")) {
 
 const botonCarrito = document.getElementById("botonCarrito")
 const divCarrito = document.getElementById("divCarrito")
-const botonAñadirAuricular = document.getElementById("botonAñadirAuricular")
-const botonAñadirMonitor = document.getElementById("botonAñadirMonitor")
-const botonAñadirMouse = document.getElementById("botonAñadirMouse")
-const botonAñadirTeclado = document.getElementById("botonAñadirTeclado")
-const botonAñadirMousepad = document.getElementById("botonAñadirMousepad")
-const botonesMostrar = document.getElementById("botonesMostrar")
+const botonCompra = document.getElementById("botonCompra")
+const divCompra = document.getElementById("divCompra")
+const botones = document.getElementById("botones")
 
-botonAñadirAuricular.addEventListener('click', () => {
+boton1.addEventListener('click', () => {
 
     divCarrito.innerHTML = ""
 
@@ -67,11 +61,9 @@ botonAñadirAuricular.addEventListener('click', () => {
     console.log(carrito)
 
     localStorage.setItem("carrito", JSON.stringify(carrito))
-
-
 })
 
-botonAñadirMonitor.addEventListener('click', () => {
+boton2.addEventListener('click', () => {
 
     divCarrito.innerHTML = ""
 
@@ -83,7 +75,7 @@ botonAñadirMonitor.addEventListener('click', () => {
 
 })
 
-botonAñadirMouse.addEventListener('click', () => {
+boton3.addEventListener('click', () => {
 
     divCarrito.innerHTML = ""
 
@@ -94,7 +86,7 @@ botonAñadirMouse.addEventListener('click', () => {
 
 })
 
-botonAñadirTeclado.addEventListener('click', () => {
+boton4.addEventListener('click', () => {
 
     divCarrito.innerHTML = ""
 
@@ -105,7 +97,7 @@ botonAñadirTeclado.addEventListener('click', () => {
 
 })
 
-botonAñadirMousepad.addEventListener('click', () => {
+boton5.addEventListener('click', () => {
 
     divCarrito.innerHTML = ""
 
@@ -116,32 +108,35 @@ botonAñadirMousepad.addEventListener('click', () => {
 
 })
 
+
 botonCarrito.addEventListener("click", () => {
 
-let carritoStorage = JSON.parse(localStorage.getItem("carrito"))
-divCarrito.innerHTML = ""
+    let carritoStorage = JSON.parse(localStorage.getItem("carrito"))
+    divCarrito.innerHTML = ""
 
-carritoStorage.forEach((producto, indice) => {
-    divCarrito.innerHTML += `<div class="card border-dark mb-3" id ="producto ${indice}" style="max-width: 20rem; margin: 4px;">
+    carritoStorage.forEach((producto, indice) => {
+        divCarrito.innerHTML += `<div class="card border-dark mb-3" id ="producto ${indice}" style="max-width: 20rem; margin: 4px;">
     <div class="card-header"><h2></h2>${producto.nombre}</h2></div>
     <div class="card-body"> 
         <p class="card-title">$${producto.precio}</p>
         <button class = "btn btn-danger">Eliminar Producto</button>
     </div>
 </div>`
-})
 
-carritoStorage.forEach((producto, indice) => {
-    let carritoBoton = document.getElementById(`producto ${indice}`).lastElementChild.lastElementChild
+    })
 
-    carritoBoton.addEventListener("click", () => {
-        document.getElementById(`producto ${indice}`).remove()
-        carrito.splice(indice, 1)
-        localStorage.setItem("carrito", JSON.stringify(carrito))
-        console.log(`${producto.nombre} Eliminado`)
+    carritoStorage.forEach((producto, indice) => {
+        let carritoBoton = document.getElementById(`producto ${indice}`).lastElementChild.lastElementChild
+
+        carritoBoton.addEventListener("click", () => {
+            document.getElementById(`producto ${indice}`).remove()
+            carrito.splice(indice, 1)
+            localStorage.setItem("carrito", JSON.stringify(carrito))
+            console.log(`${producto.nombre} Eliminado`)
+        })
     })
 })
-})
+
 
 //Registro de Usuarios
 
@@ -209,6 +204,7 @@ botonUsers.addEventListener("click", () => {
         })
     })
 })
+
 
 //Dropdown de Tema (Blanco o Negro)
 
