@@ -1,45 +1,57 @@
 class Producto {
-    constructor(id, nombre, marca, precio, stock, imagen, boton) {
-        this.id = id
-        this.nombre = nombre
-        this.marca = marca
-        this.precio = precio
-        this.stock = stock
+    constructor(id, nombre, marca, precio, stock, imagen, cantidad) {
+        this.i = id
+        this.n = nombre
+        this.m = marca
+        this.p = precio
+        this.s = stock
         this.imagen = imagen
-        this.boton = boton
+        this.cantidad = cantidad
     }
 }
 
-const producto1 = new Producto(1, "AURICULAR", "Logitech", 15000, 10, `img/auricular.png`, `<button id = "boton1" >Añadir Auricular al Carrito</button>`)
-const producto2 = new Producto(2, "MONITOR", "Samsung", 30000, 15, `img/monitor.png`, `<button id = "boton2" >Añadir Monitor al Carrito</button>`)
-const producto3 = new Producto(3, "MOUSE", "Redragon", 6000, 12, `img/mouse.png`, `<button id = "boton3" >Añadir Mouse al Carrito</button>`)
-const producto4 = new Producto(4, "TECLADO", "Redragon", 7600, 18, `img/teclado.png`, `<button id = "boton4" >Añadir Teclado al Carrito</button>`)
-const producto5 = new Producto(5, "MOUSEPAD", "Hyperx", 2000, 19, `img/mousepad.png`, `<button id = "boton5" >Añadir Mousepad al Carrito</button>`)
+class Cart {
+    constructor(id, nombre, marca, precio, imagen, cantidad = 1) {
+        this.i = id
+        this.n = nombre
+        this.m = marca
+        this.p = precio
+        this.imagen = imagen
+        this.cantidad = cantidad
+    }
+}
+
+const producto1 = new Producto(1, "AURICULAR", "Logitech", 15000, 10, `img/auricular.png`)
+const producto2 = new Producto(2, "MONITOR", "Samsung", 30000, 15, `img/monitor.png`)
+const producto3 = new Producto(3, "MOUSE", "Redragon", 6000, 12, `img/mouse.png`)
+const producto5 = new Producto(5, "MOUSEPAD", "Hyperx", 2000, 19, `img/mousepad.png`)
+
+//Spread
+
+const producto4 = structuredClone(producto3)
+
+producto4.i = 4
+producto4.n = "TECLADO"
+producto4.p = 7600
+producto4.s = 18
+producto4.imagen = `img/teclado.png`
+producto4.b = `<button id = "boton4" >Añadir Teclado al Carrito</button>`
+
+function mostrarStock({ n: nombre }) {
+    console.log(nombre)
+}
+
+mostrarStock(producto1)
 
 const productos = [producto1, producto2, producto3, producto4, producto5]
-
-const divProductos = document.getElementById("productos")
-
-function renderizarProductos(productos) {
-    for (let producto of productos) {
-        divProductos.innerHTML += `
-        <div class="card productos" id="producto${producto.id}" style="width: 18rem;">
-        <div class="card-body">
-            <h5 class="card-title">${producto.nombre}</h5>
-            <p class="card-text">Marca: ${producto.marca}</p>
-            <p class="card-text">Precio: $${producto.precio}</p>
-            <p class="card-text">Stock: ${producto.stock}</p>
-            <div class = "imagen"><img src = "${producto.imagen}"></div>
-            <div id = "botones" class="btn btn-primary">${producto.boton}</div>
-        </div>
-        </div>
-        `
-    }
-}
-
-renderizarProductos(productos)
-
 let carrito = []
+
+const botonCarrito = document.getElementById("botonCarrito")
+const divCarrito = document.getElementById("divCarrito")
+const botonCompra = document.getElementById("botonCompra")
+const divCompra = document.getElementById("divCompra")
+const botones = document.getElementById("botones")
+const divProductos = document.getElementById("productos")
 
 if (localStorage.getItem("carrito")) {
     carrito = JSON.parse(localStorage.getItem("carrito"))
@@ -47,67 +59,48 @@ if (localStorage.getItem("carrito")) {
     localStorage.setItem("carrito", JSON.stringify(carrito))
 }
 
-const botonCarrito = document.getElementById("botonCarrito")
-const divCarrito = document.getElementById("divCarrito")
-const botonCompra = document.getElementById("botonCompra")
-const divCompra = document.getElementById("divCompra")
-const botones = document.getElementById("botones")
+function renderizarProductos(productos) {
+    for (let producto of productos) {
+        let div = document.createElement("div")
+        div.className = "card productos"
+        div.setAttribute("id", producto.id)
+        div.style.width = "18rem"
+        div.innerHTML += `
+            <div class="card-body">
+                <h5 class="card-title">${producto.n}</h5>
+                <p class="card-text">Marca: ${producto.m}</p>
+                <p class="card-text">Precio: $${producto.p}</p>
+                <p class="card-text">Stock: ${producto.s}</p>
+                <div class = "imagen"><img src = "${producto.imagen}"></div>
+                <div class="btn btn-primary">
+                    <button id="botonAgregar${producto.i}">Agregar</button>
+                </div>
+            </div>
+        `
+        divProductos.appendChild(div)
+        let botonAgregar = document.getElementById(`botonAgregar${producto.i}`)
+        botonAgregar.addEventListener("click", () => {
+            agregarAlCarrito(producto.i)
+        })
+    }
+}
 
-boton1.addEventListener('click', () => {
+renderizarProductos(productos)
 
-    divCarrito.innerHTML = ""
-
-    carrito.push(producto1)
+function agregarAlCarrito(productId) {
+    let buscarProducto = productos.find(elemento => elemento.i === productId)
+    console.log(buscarProducto)
+    if (buscarProducto) {
+        let productoAgregado = carrito.find(elemento => elemento.i == buscarProducto.i)
+        if (productoAgregado) {
+            productoAgregado.cantidad += 1
+        } else {
+            carrito.push(new Cart(buscarProducto.i, buscarProducto.n, buscarProducto.m, buscarProducto.p, buscarProducto.imagen, buscarProducto.cantidad))
+        }
+    }
+    localStorage.setItem('carrito', JSON.stringify(carrito))
     console.log(carrito)
-
-    localStorage.setItem("carrito", JSON.stringify(carrito))
-})
-
-boton2.addEventListener('click', () => {
-
-    divCarrito.innerHTML = ""
-
-    carrito.push(producto2)
-    console.log(carrito)
-
-    localStorage.setItem("carrito", JSON.stringify(carrito))
-
-
-})
-
-boton3.addEventListener('click', () => {
-
-    divCarrito.innerHTML = ""
-
-    carrito.push(producto3)
-    console.log(carrito)
-
-    localStorage.setItem("carrito", JSON.stringify(carrito))
-
-})
-
-boton4.addEventListener('click', () => {
-
-    divCarrito.innerHTML = ""
-
-    carrito.push(producto4)
-    console.log(carrito)
-
-    localStorage.setItem("carrito", JSON.stringify(carrito))
-
-})
-
-boton5.addEventListener('click', () => {
-
-    divCarrito.innerHTML = ""
-
-    carrito.push(producto5)
-    console.log(carrito)
-
-    localStorage.setItem("carrito", JSON.stringify(carrito))
-
-})
-
+};
 
 botonCarrito.addEventListener("click", () => {
 
@@ -116,9 +109,9 @@ botonCarrito.addEventListener("click", () => {
 
     carritoStorage.forEach((producto, indice) => {
         divCarrito.innerHTML += `<div class="card border-dark mb-3" id ="producto ${indice}" style="max-width: 20rem; margin: 4px;">
-    <div class="card-header"><h2></h2>${producto.nombre}</h2></div>
+    <div class="card-header"><h2></h2>${producto.n}</h2></div>
     <div class="card-body"> 
-        <p class="card-title">$${producto.precio}</p>
+        <p class="card-title">$${producto.p}</p>
         <button class = "btn btn-danger">Eliminar Producto</button>
     </div>
 </div>`
@@ -132,79 +125,10 @@ botonCarrito.addEventListener("click", () => {
             document.getElementById(`producto ${indice}`).remove()
             carrito.splice(indice, 1)
             localStorage.setItem("carrito", JSON.stringify(carrito))
-            console.log(`${producto.nombre} Eliminado`)
+            console.log(`${producto.n} Eliminado`)
         })
     })
 })
-
-
-//Registro de Usuarios
-
-class Usuario {
-    constructor(username, email, password) {
-        this.username = username
-        this.email = email
-        this.password = password
-    }
-}
-
-let usuarios = []
-
-if (localStorage.getItem("usuarios")) {
-    usuarios = JSON.parse(localStorage.getItem("usuarios"))
-} else {
-    localStorage.setItem("usuarios", JSON.stringify(usuarios))
-}
-
-const form = document.getElementById("idForm")
-const divUsers = document.getElementById("divUsers")
-const botonUsers = document.getElementById("botonUsers")
-
-form.addEventListener('submit', (event) => {
-    event.preventDefault()
-    console.log(event.target)
-
-    let datForm = new FormData(event.target)
-
-    console.log(datForm.get("user"), datForm.get("email"), datForm.get("password"))
-
-    const usuario = new Usuario(datForm.get("user"), datForm.get("email"), datForm.get("password"))
-
-    usuarios.push(usuario)
-    console.log(usuarios)
-
-    localStorage.setItem("usuarios", JSON.stringify(usuarios))
-
-    form.reset()
-})
-
-botonUsers.addEventListener("click", () => {
-    let arrayStorage = JSON.parse(localStorage.getItem("usuarios"))
-    divUsers.innerHTML = ""
-
-    arrayStorage.forEach((usuario, indice) => {
-        divUsers.innerHTML += `
-        <div class="card border-dark mb-3" id ="usuario ${indice}" style="max-width: 20rem; margin: 4px;">
-            <div class="card-header"><h2></h2>${usuario.username}</h2></div>
-            <div class="card-body"> 
-                <p class="card-title">${usuario.email}</p>
-                <button class = "btn btn-danger">Eliminar Usuario</button>
-            </div>
-        </div>`
-    })
-
-    arrayStorage.forEach((usuario, indice) => {
-        let botonCard = document.getElementById(`usuario ${indice}`).lastElementChild.lastElementChild
-
-        botonCard.addEventListener("click", () => {
-            document.getElementById(`usuario ${indice}`).remove()
-            usuarios.splice(indice, 1)
-            localStorage.setItem("usuarios", JSON.stringify(usuarios))
-            console.log(`${usuario.username} Eliminada`)
-        })
-    })
-})
-
 
 //Dropdown de Tema (Blanco o Negro)
 
@@ -213,11 +137,9 @@ const botonLightMode = document.getElementById("botonLightMode")
 
 let darkMode
 
-if (localStorage.getItem('theme')) {
-    darkMode = localStorage.getItem('theme')
-} else {
-    localStorage.setItem('theme', "light")
-}
+//Operador Ternario
+
+(localStorage.getItem("theme")) ? darkMode = localStorage.getItem("theme") : localStorage.setItem("theme", "light")
 
 if (darkMode == "dark") {
     document.body.classList.add('darkMode')
@@ -234,3 +156,4 @@ botonLightMode.addEventListener("click", () => {
     document.body.classList.remove('darkMode')
     localStorage.setItem('theme', "light")
 })
+

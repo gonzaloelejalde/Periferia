@@ -4,59 +4,60 @@
     color: black;
 }
 
-#productos{
+#productos {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
 }
 
-h1{
+h1 {
     margin-bottom: 50px;
     text-decoration: underline;
     display: flex;
     justify-content: center;
 }
 
-img{
+img {
     width: 100%;
     height: 100%;
 }
 
-#parrafo1{
+#parrafo1 {
     margin-left: 30px;
 }
 
-#idBoton{
+#idBoton {
     margin-bottom: 5px;
 }
 
-.card-title{
+.card-title {
     display: flex;
     flex-wrap: wrap;
 }
 
-.container{
+.container {
     margin-top: 10px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
 }
-#idMostrar{
+
+#idMostrar {
     margin: 5px;
 }
 
-.registro{
+.registro {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     margin-bottom: 5px;
 }
 
-.color{
+.color {
     margin-left: 30px;
 }
 
-body{
+body {
     background-color: white;
     color: black;
     transition: ease 1s;
@@ -67,24 +68,29 @@ body{
     color: white;
 }
 
-.dropdown{
+.dropdown {
     margin-left: 30px;
     margin-bottom: 10px;
 }
 
-.card{
+.card {
     color: black;
     background-color: aquamarine;
 }
 
-.btn-danger{
+.btn-danger {
     margin: 10px;
 }
 
-.btn-dark{
+.btn-dark {
     margin: 10px;
 }
 
-.btn-primary{
+.btn-primary {
     margin-top: 15px;
+}
+.container-fluid{
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
 }
