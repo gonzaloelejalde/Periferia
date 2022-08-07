@@ -94,3 +94,6 @@ body {
     flex-wrap: wrap;
     margin-bottom: 10px;
 }
+.carritoLogos{
+    list-style-type: none;
+}

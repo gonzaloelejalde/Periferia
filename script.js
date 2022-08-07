@@ -1,12 +1,12 @@
 class Producto {
-    constructor(id, nombre, marca, precio, stock, imagen, cantidad) {
+    constructor(id, nombre, marca, precio, stock, imagen, cantidad = 1) {
         this.i = id
         this.n = nombre
         this.m = marca
         this.p = precio
         this.s = stock
         this.imagen = imagen
-        this.cantidad = cantidad
+        this.c = cantidad
     }
 }
 
@@ -17,7 +17,7 @@ class Cart {
         this.m = marca
         this.p = precio
         this.imagen = imagen
-        this.cantidad = cantidad
+        this.c = cantidad
     }
 }
 
@@ -52,6 +52,7 @@ const botonCompra = document.getElementById("botonCompra")
 const divCompra = document.getElementById("divCompra")
 const botones = document.getElementById("botones")
 const divProductos = document.getElementById("productos")
+const carritoLogo = document.getElementById("carritoLogo")
 
 if (localStorage.getItem("carrito")) {
     carrito = JSON.parse(localStorage.getItem("carrito"))
@@ -71,9 +72,10 @@ function renderizarProductos(productos) {
                 <p class="card-text">Marca: ${producto.m}</p>
                 <p class="card-text">Precio: $${producto.p}</p>
                 <p class="card-text">Stock: ${producto.s}</p>
+                <p class="card-text">Cantidad: ${producto.c}</p>
                 <div class = "imagen"><img src = "${producto.imagen}"></div>
                 <div class="btn btn-primary">
-                    <button id="botonAgregar${producto.i}">Agregar</button>
+                    <button id="botonAgregar${producto.i}" class="btn btn-secondary"><i class="fas fa-cart-plus"></i> Agregar</button>
                 </div>
             </div>
         `
@@ -93,16 +95,17 @@ function agregarAlCarrito(productId) {
     if (buscarProducto) {
         let productoAgregado = carrito.find(elemento => elemento.i == buscarProducto.i)
         if (productoAgregado) {
-            productoAgregado.cantidad += 1
+            productoAgregado.c += 1
         } else {
-            carrito.push(new Cart(buscarProducto.i, buscarProducto.n, buscarProducto.m, buscarProducto.p, buscarProducto.imagen, buscarProducto.cantidad))
+            carrito.push(new Cart(buscarProducto.i, buscarProducto.n, buscarProducto.m, buscarProducto.p, buscarProducto.imagen, buscarProducto.c))
         }
     }
     localStorage.setItem('carrito', JSON.stringify(carrito))
     console.log(carrito)
-};
 
-botonCarrito.addEventListener("click", () => {
+}
+
+carritoLogo.addEventListener("click", () => {
 
     let carritoStorage = JSON.parse(localStorage.getItem("carrito"))
     divCarrito.innerHTML = ""
@@ -115,7 +118,6 @@ botonCarrito.addEventListener("click", () => {
         <button class = "btn btn-danger">Eliminar Producto</button>
     </div>
 </div>`
-
     })
 
     carritoStorage.forEach((producto, indice) => {
