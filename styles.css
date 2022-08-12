@@ -82,10 +82,6 @@ body {
     margin: 10px;
 }
 
-.btn-dark {
-    margin: 10px;
-}
-
 .btn-primary {
     margin-top: 15px;
 }
@@ -95,5 +91,12 @@ body {
     margin-bottom: 10px;
 }
 .carritoLogos{
+    display: flex;
+    flex-wrap: wrap;
+    margin: 10px;
     list-style-type: none;
+}
+
+.botonComprar{
+    margin-left: 10px;
 }

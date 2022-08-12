@@ -1,0 +1,37 @@
+[
+    {
+        "nombre": "Auricular",
+        "marca": "Logitech",
+        "precio": 15000,
+        "stock": 1,
+        "img": "auricular.png"
+    },
+    {
+        "nombre": "Monitor",
+        "marca": "Samsung",
+        "precio": 30000,
+        "stock": 1,
+        "img": "monitor.png"
+    },
+    {
+        "nombre": "Mouse",
+        "marca": "Redragon",
+        "precio": 6000,
+        "stock": 1,
+        "img": "mouse.png"
+    },
+    {
+        "nombre": "Teclado",
+        "marca": "Redragon",
+        "precio": 7600,
+        "stock": 1,
+        "img": "teclado.png"
+    },
+    {
+        "nombre": "Mousepad",
+        "marca": "Hyperx",
+        "precio": 2000,
+        "stock": 1,
+        "img": "mousepad.png"
+    }
+]

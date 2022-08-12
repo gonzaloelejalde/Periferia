@@ -6,7 +6,6 @@ class Producto {
         this.p = precio
         this.s = stock
         this.imagen = imagen
-        this.c = cantidad
     }
 }
 
@@ -21,27 +20,20 @@ class Cart {
     }
 }
 
-const producto1 = new Producto(1, "AURICULAR", "Logitech", 15000, 10, `img/auricular.png`)
-const producto2 = new Producto(2, "MONITOR", "Samsung", 30000, 15, `img/monitor.png`)
-const producto3 = new Producto(3, "MOUSE", "Redragon", 6000, 12, `img/mouse.png`)
-const producto5 = new Producto(5, "MOUSEPAD", "Hyperx", 2000, 19, `img/mousepad.png`)
+const producto1 = new Producto(1, "AURICULAR", "Logitech", 15000, 1, `img/auricular.png`)
+const producto2 = new Producto(2, "MONITOR", "Samsung", 30000, 1, `img/monitor.png`)
+const producto3 = new Producto(3, "MOUSE", "Redragon", 6000, 1, `img/mouse.png`)
+const producto5 = new Producto(5, "MOUSEPAD", "Hyperx", 2000, 1, `img/mousepad.png`)
 
 //Spread
 
 const producto4 = structuredClone(producto3)
 
-producto4.i = 4
 producto4.n = "TECLADO"
 producto4.p = 7600
 producto4.s = 18
 producto4.imagen = `img/teclado.png`
 producto4.b = `<button id = "boton4" >Añadir Teclado al Carrito</button>`
-
-function mostrarStock({ n: nombre }) {
-    console.log(nombre)
-}
-
-mostrarStock(producto1)
 
 const productos = [producto1, producto2, producto3, producto4, producto5]
 let carrito = []
@@ -53,6 +45,7 @@ const divCompra = document.getElementById("divCompra")
 const botones = document.getElementById("botones")
 const divProductos = document.getElementById("productos")
 const carritoLogo = document.getElementById("carritoLogo")
+const card = document.getElementById("card")
 
 if (localStorage.getItem("carrito")) {
     carrito = JSON.parse(localStorage.getItem("carrito"))
@@ -72,7 +65,6 @@ function renderizarProductos(productos) {
                 <p class="card-text">Marca: ${producto.m}</p>
                 <p class="card-text">Precio: $${producto.p}</p>
                 <p class="card-text">Stock: ${producto.s}</p>
-                <p class="card-text">Cantidad: ${producto.c}</p>
                 <div class = "imagen"><img src = "${producto.imagen}"></div>
                 <div class="btn btn-primary">
                     <button id="botonAgregar${producto.i}" class="btn btn-secondary"><i class="fas fa-cart-plus"></i> Agregar</button>
@@ -86,7 +78,6 @@ function renderizarProductos(productos) {
         })
     }
 }
-
 renderizarProductos(productos)
 
 function agregarAlCarrito(productId) {
@@ -118,9 +109,10 @@ function agregarAlCarrito(productId) {
     console.log(carrito)
 }
 
-carritoLogo.addEventListener("click", () => {
+const carritoStorage = JSON.parse(localStorage.getItem("carrito"))
 
-    let carritoStorage = JSON.parse(localStorage.getItem("carrito"))
+carritoLogo.addEventListener("click", () => {
+    const carritoStorage = JSON.parse(localStorage.getItem("carrito"))
     divCarrito.innerHTML = ""
 
     carritoStorage.forEach((producto, indice) => {
@@ -159,6 +151,35 @@ carritoLogo.addEventListener("click", () => {
         })
     })
 })
+
+function comprar(){
+    let botonComprar = document.getElementById("botonComprar")
+    botonComprar.addEventListener("click", () =>{
+
+        if(carritoStorage.length === 0){
+            Swal.fire({
+                icon: 'error',
+                text: 'El carrito esta vacío',
+            })
+        }else if (carritoStorage.length !== 0){
+            Swal.fire({
+                icon: 'success',
+                title: '¡Felicidades!',
+                text: 'Compra realizada con éxito',
+            })
+        }
+
+        carritoStorage.forEach((producto, indice) => {
+                document.getElementById(`producto ${indice}`).remove()
+                carrito.splice(indice, 5)
+                localStorage.setItem("carrito", JSON.stringify(carrito))
+                console.log(`${producto.n} eliminado`)
+        })
+    })
+
+
+}
+comprar()
 
 //Dropdown de Tema (Blanco o Negro)
 
