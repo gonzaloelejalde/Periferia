@@ -42,14 +42,9 @@ const carrito = JSON.parse(localStorage.getItem("carrito")) || []
 
 //Elementos del index
 
-const botonCarrito = document.getElementById("botonCarrito")
 const divCarrito = document.getElementById("divCarrito")
-const botonCompra = document.getElementById("botonCompra")
-const divCompra = document.getElementById("divCompra")
-const botones = document.getElementById("botones")
 const divProductos = document.getElementById("productos")
 const carritoLogo = document.getElementById("carritoLogo")
-const card = document.getElementById("card")
 
 //Funcion de las cards
 
@@ -114,17 +109,8 @@ function agregarAlCarrito(productId) {
 //Boton que muestra el contenido del carrito
 
 carritoLogo.addEventListener("click", () => {
-    divCarrito.innerHTML = ""
 
-    carrito.forEach((producto, indice) => {
-        divCarrito.innerHTML += `<div class="card border-dark mb-3" id ="producto ${indice}" style="max-width: 20rem; margin: 4px;">
-    <div class="card-header"><h2></h2>${producto.n}</h2></div>
-    <div class="card-body"> 
-        <p class="card-title">$${producto.p}</p>
-        <button class = "btn btn-danger">Eliminar Producto</button>
-    </div>
-</div>`
-    })
+    renderizarCard()
 
     carrito.forEach((producto, indice) => {
         let carritoBoton = document.getElementById(`producto ${indice}`).lastElementChild.lastElementChild
@@ -153,12 +139,27 @@ carritoLogo.addEventListener("click", () => {
     })
 })
 
-//Funcion apra eliminar los productos del carrito una vez hecha la compra
+function renderizarCard(){
+    divCarrito.innerHTML = ""
+
+    carrito.forEach((producto, indice) => {
+        divCarrito.innerHTML += `<div class="card border-dark mb-3" id ="producto ${indice}" style="max-width: 20rem; margin: 4px;">
+    <div class="card-header"><h2></h2>${producto.n}</h2></div>
+    <div class="card-body"> 
+        <p class="card-title">$${producto.p}</p>
+        <button class = "btn btn-danger">Eliminar Producto</button>
+    </div>
+</div>`
+    })
+}
+
+
+
+//Funcion para eliminar los productos del carrito una vez hecha la compra
 
 function comprar(){
     let botonComprar = document.getElementById("botonComprar")
     botonComprar.addEventListener("click", () =>{
-
         if(carrito.length === 0){
             Swal.fire({
                 icon: 'error',
@@ -170,12 +171,11 @@ function comprar(){
                 title: '¡Felicidades!',
                 text: 'Compra realizada con éxito',
             })
-            carrito.splice(0,carrito.length)
+            carrito.splice(0, carrito.length)
+            divCarrito.remove(0, divCarrito.length)
             localStorage.setItem('carrito', JSON.stringify(carrito))
         }
     })
-
-
 }
 comprar()
 
