@@ -1,5 +1,7 @@
+//Constructores
+
 class Producto {
-    constructor(id, nombre, marca, precio, stock, imagen, cantidad = 1) {
+    constructor(id, nombre, marca, precio, stock, imagen) {
         this.i = id
         this.n = nombre
         this.m = marca
@@ -36,7 +38,9 @@ producto4.imagen = `img/teclado.png`
 producto4.b = `<button id = "boton4" >Añadir Teclado al Carrito</button>`
 
 const productos = [producto1, producto2, producto3, producto4, producto5]
-let carrito = []
+const carrito = JSON.parse(localStorage.getItem("carrito")) || []
+
+//Elementos del index
 
 const botonCarrito = document.getElementById("botonCarrito")
 const divCarrito = document.getElementById("divCarrito")
@@ -47,11 +51,7 @@ const divProductos = document.getElementById("productos")
 const carritoLogo = document.getElementById("carritoLogo")
 const card = document.getElementById("card")
 
-if (localStorage.getItem("carrito")) {
-    carrito = JSON.parse(localStorage.getItem("carrito"))
-} else {
-    localStorage.setItem("carrito", JSON.stringify(carrito))
-}
+//Funcion de las cards
 
 function renderizarProductos(productos) {
     for (let producto of productos) {
@@ -67,7 +67,7 @@ function renderizarProductos(productos) {
                 <p class="card-text">Stock: ${producto.s}</p>
                 <div class = "imagen"><img src = "${producto.imagen}"></div>
                 <div class="btn btn-primary">
-                    <button id="botonAgregar${producto.i}" class="btn btn-secondary"><i class="fas fa-cart-plus"></i> Agregar</button>
+                    <button id="botonAgregar${producto.i}" class="btn btn-primary"><i class="fas fa-cart-plus"></i> Agregar</button>
                 </div>
             </div>
         `
@@ -79,6 +79,8 @@ function renderizarProductos(productos) {
     }
 }
 renderizarProductos(productos)
+
+//Funcion para que se agreguen los elemenso al carrito de compras
 
 function agregarAlCarrito(productId) {
     let buscarProducto = productos.find(elemento => elemento.i === productId)
@@ -109,13 +111,12 @@ function agregarAlCarrito(productId) {
     console.log(carrito)
 }
 
-const carritoStorage = JSON.parse(localStorage.getItem("carrito"))
+//Boton que muestra el contenido del carrito
 
 carritoLogo.addEventListener("click", () => {
-    const carritoStorage = JSON.parse(localStorage.getItem("carrito"))
     divCarrito.innerHTML = ""
 
-    carritoStorage.forEach((producto, indice) => {
+    carrito.forEach((producto, indice) => {
         divCarrito.innerHTML += `<div class="card border-dark mb-3" id ="producto ${indice}" style="max-width: 20rem; margin: 4px;">
     <div class="card-header"><h2></h2>${producto.n}</h2></div>
     <div class="card-body"> 
@@ -125,7 +126,7 @@ carritoLogo.addEventListener("click", () => {
 </div>`
     })
 
-    carritoStorage.forEach((producto, indice) => {
+    carrito.forEach((producto, indice) => {
         let carritoBoton = document.getElementById(`producto ${indice}`).lastElementChild.lastElementChild
 
         carritoBoton.addEventListener("click", () => {
@@ -152,34 +153,72 @@ carritoLogo.addEventListener("click", () => {
     })
 })
 
+//Funcion apra eliminar los productos del carrito una vez hecha la compra
+
 function comprar(){
     let botonComprar = document.getElementById("botonComprar")
     botonComprar.addEventListener("click", () =>{
 
-        if(carritoStorage.length === 0){
+        if(carrito.length === 0){
             Swal.fire({
                 icon: 'error',
                 text: 'El carrito esta vacío',
             })
-        }else if (carritoStorage.length !== 0){
+        }else if (carrito.length !== 0){
             Swal.fire({
                 icon: 'success',
                 title: '¡Felicidades!',
                 text: 'Compra realizada con éxito',
             })
+            carrito.splice(0,carrito.length)
+            localStorage.setItem('carrito', JSON.stringify(carrito))
         }
-
-        carritoStorage.forEach((producto, indice) => {
-                document.getElementById(`producto ${indice}`).remove()
-                carrito.splice(indice, 5)
-                localStorage.setItem("carrito", JSON.stringify(carrito))
-                console.log(`${producto.n} eliminado`)
-        })
     })
 
 
 }
 comprar()
+
+//Fetch
+
+const tableId = document.getElementById("tableId")
+const boton1 = document.getElementById("boton1")
+
+async function mostrarProximamente() {
+    const productos = await fetch('./json/productos.json')
+    const productosParseados = await productos.json()
+    tableId.innerHTML = `
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Modelo</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Imagen</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+            <tbody id="tBody">
+            </tbody>
+        </table>
+    
+    `
+    productosParseados.forEach((producto, indice) => {
+        tBody.innerHTML += `
+            <tr id="producto${indice + 1}">
+                <th scope="row">${indice + 1}</th>
+                <td>${producto.nombre}</td>
+                <td>${producto.modelo}</td>
+                <td>$${producto.precio}</td>
+                <td><img src="./img/${producto.img}" class = "imagenes"></td>
+            </tr>
+        `
+})}
+
+boton1.addEventListener('click', () => {
+    mostrarProximamente()
+})
 
 //Dropdown de Tema (Blanco o Negro)
 
@@ -207,4 +246,6 @@ botonLightMode.addEventListener("click", () => {
     document.body.classList.remove('darkMode')
     localStorage.setItem('theme', "light")
 })
+
+
 

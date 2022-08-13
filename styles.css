@@ -58,14 +58,17 @@ img {
 }
 
 body {
-    background-color: white;
-    color: black;
     transition: ease 1s;
 }
 
-.darkMode {
+.darkMode{
     background-color: black;
     color: white;
+}
+
+.table{
+    color: white;
+    background-color: black;
 }
 
 .dropdown {
@@ -83,7 +86,7 @@ body {
 }
 
 .btn-primary {
-    margin-top: 15px;
+    margin: 5px;
 }
 .container-fluid{
     display: flex;
@@ -99,4 +102,8 @@ body {
 
 .botonComprar{
     margin-left: 10px;
+}
+
+.imagenes {
+    width: 45px;
 }

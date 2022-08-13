@@ -1,37 +1,20 @@
 [
     {
-        "nombre": "Auricular",
-        "marca": "Logitech",
-        "precio": 15000,
-        "stock": 1,
-        "img": "auricular.png"
+        "nombre": "PLACA DE VIDEO INNO3D NVIDIA GEFORCE RTX 3050 TWIN DUAL 8GB GDDR6 LHR",
+        "modelo": "N30502-08D6X-11902130",
+        "precio": 89900,
+        "img": "placa.png"
     },
     {
-        "nombre": "Monitor",
-        "marca": "Samsung",
-        "precio": 30000,
-        "stock": 1,
-        "img": "monitor.png"
+        "nombre": "MEMORIA RAM KINGSTON DDR4 8GB 2666MHZ",
+        "modelo": "KVR26N19S6/8",
+        "precio": 6899,
+        "img": "memoria.jpg"
     },
     {
-        "nombre": "Mouse",
-        "marca": "Redragon",
-        "precio": 6000,
-        "stock": 1,
-        "img": "mouse.png"
-    },
-    {
-        "nombre": "Teclado",
-        "marca": "Redragon",
-        "precio": 7600,
-        "stock": 1,
-        "img": "teclado.png"
-    },
-    {
-        "nombre": "Mousepad",
-        "marca": "Hyperx",
-        "precio": 2000,
-        "stock": 1,
-        "img": "mousepad.png"
+        "nombre": "DISCO SOLIDO SSD 512GB PATRIOT P300 M2 NVME 1700MB/S",
+        "modelo": "P300P512GM28",
+        "precio": 9990,
+        "img": "ssd.jpg"
     }
 ]
