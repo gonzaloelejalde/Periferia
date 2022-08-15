@@ -30,10 +30,9 @@ const producto5 = new Producto(5, "MOUSEPAD", "Hyperx", 2000, 1, `img/mousepad.p
 //Spread
 
 const producto4 = structuredClone(producto3)
-
+producto4.i = 4
 producto4.n = "TECLADO"
 producto4.p = 7600
-producto4.s = 18
 producto4.imagen = `img/teclado.png`
 producto4.b = `<button id = "boton4" >Añadir Teclado al Carrito</button>`
 
@@ -52,7 +51,7 @@ function renderizarProductos(productos) {
     for (let producto of productos) {
         let div = document.createElement("div")
         div.className = "card productos"
-        div.setAttribute("id", producto.id)
+        div.setAttribute("id", producto.i)
         div.style.width = "18rem"
         div.innerHTML += `
             <div class="card-body">
@@ -75,7 +74,7 @@ function renderizarProductos(productos) {
 }
 renderizarProductos(productos)
 
-//Funcion para que se agreguen los elemenso al carrito de compras
+//Funcion para que se agreguen los elementos al carrito 
 
 function agregarAlCarrito(productId) {
     let buscarProducto = productos.find(elemento => elemento.i === productId)
@@ -93,8 +92,8 @@ function agregarAlCarrito(productId) {
         duration: 3000,
         close: true,
         gravity: "top",
-        position: "right", 
-        stopOnFocus: true, 
+        position: "right",
+        stopOnFocus: true,
         style: {
             background: "linear-gradient(to bottom left, #30655A, #0229BA)",
         },
@@ -110,10 +109,20 @@ function agregarAlCarrito(productId) {
 
 carritoLogo.addEventListener("click", () => {
 
-    renderizarCard()
+    divCarrito.innerHTML = ""
 
     carrito.forEach((producto, indice) => {
-        let carritoBoton = document.getElementById(`producto ${indice}`).lastElementChild.lastElementChild
+        divCarrito.innerHTML += `<div class="card border-dark mb-3" id ="producto ${indice}" style="max-width: 20rem; margin: 4px;">
+    <div class="card-header"><h2></h2>${producto.n}</h2></div>
+    <div class="card-body"> 
+        <p class="card-title">$${producto.p}</p>
+        <button class = "btn btn-danger">Eliminar Producto</button>
+    </div>
+</div>`
+    })
+
+    carrito.forEach((producto, indice) => {
+        let carritoBoton = document.getElementById(`producto ${indice}`)
 
         carritoBoton.addEventListener("click", () => {
             document.getElementById(`producto ${indice}`).remove()
@@ -126,8 +135,8 @@ carritoLogo.addEventListener("click", () => {
                 duration: 3000,
                 close: true,
                 gravity: "top",
-                position: "right", 
-                stopOnFocus: true, 
+                position: "right",
+                stopOnFocus: true,
                 style: {
                     background: "linear-gradient(90deg, rgba(0,212,255,1) 0%, rgba(35,0,31,1) 0%, rgba(204,4,4,1) 51%, rgba(2,0,36,1) 100%)",
                 },
@@ -139,40 +148,24 @@ carritoLogo.addEventListener("click", () => {
     })
 })
 
-function renderizarCard(){
-    divCarrito.innerHTML = ""
-
-    carrito.forEach((producto, indice) => {
-        divCarrito.innerHTML += `<div class="card border-dark mb-3" id ="producto ${indice}" style="max-width: 20rem; margin: 4px;">
-    <div class="card-header"><h2></h2>${producto.n}</h2></div>
-    <div class="card-body"> 
-        <p class="card-title">$${producto.p}</p>
-        <button class = "btn btn-danger">Eliminar Producto</button>
-    </div>
-</div>`
-    })
-}
-
-
-
 //Funcion para eliminar los productos del carrito una vez hecha la compra
 
-function comprar(){
+function comprar() {
     let botonComprar = document.getElementById("botonComprar")
-    botonComprar.addEventListener("click", () =>{
-        if(carrito.length === 0){
+    botonComprar.addEventListener("click", () => {
+        if (carrito.length === 0) {
             Swal.fire({
                 icon: 'error',
                 text: 'El carrito esta vacío',
             })
-        }else if (carrito.length !== 0){
+        } else if (carrito.length !== 0) {
             Swal.fire({
                 icon: 'success',
                 title: '¡Felicidades!',
                 text: 'Compra realizada con éxito',
             })
             carrito.splice(0, carrito.length)
-            divCarrito.remove(0, divCarrito.length)
+            divCarrito.innerHTML -= ""
             localStorage.setItem('carrito', JSON.stringify(carrito))
         }
     })
@@ -214,7 +207,8 @@ async function mostrarProximamente() {
                 <td><img src="./img/${producto.img}" class = "imagenes"></td>
             </tr>
         `
-})}
+    })
+}
 
 boton1.addEventListener('click', () => {
     mostrarProximamente()
