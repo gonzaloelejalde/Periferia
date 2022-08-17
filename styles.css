@@ -61,12 +61,12 @@ body {
     transition: ease 1s;
 }
 
-.darkMode{
+.darkMode {
     background-color: black;
     color: white;
 }
 
-.table{
+.table {
     color: white;
     background-color: black;
 }
@@ -88,19 +88,21 @@ body {
 .btn-primary {
     margin: 5px;
 }
-.container-fluid{
+
+.container-fluid {
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 10px;
 }
-.carritoLogos{
+
+.carritoLogos {
     display: flex;
     flex-wrap: wrap;
     margin: 10px;
     list-style-type: none;
 }
 
-.botonComprar{
+.botonComprar {
     margin-left: 10px;
 }
 

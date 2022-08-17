@@ -148,6 +148,8 @@ carritoLogo.addEventListener("click", () => {
     })
 })
 
+const carritoVacio = "Carrito Vacio"
+
 //Funcion para eliminar los productos del carrito una vez hecha la compra
 
 function comprar() {
@@ -165,7 +167,8 @@ function comprar() {
                 text: 'Compra realizada con éxito',
             })
             carrito.splice(0, carrito.length)
-            divCarrito.innerHTML -= ""
+            divCarrito.innerHTML -= ``
+            divCarrito.innerHTML += `(Error) / ${carritoVacio}`
             localStorage.setItem('carrito', JSON.stringify(carrito))
         }
     })
