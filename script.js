@@ -167,8 +167,8 @@ function comprar() {
                 text: 'Compra realizada con éxito',
             })
             carrito.splice(0, carrito.length)
-            divCarrito.innerHTML -= ``
-            divCarrito.innerHTML += `(Error) / ${carritoVacio}`
+            divCarrito.innerHTML = ""
+            // divCarrito.innerHTML += `(Error) / ${carritoVacio}`
             localStorage.setItem('carrito', JSON.stringify(carrito))
         }
     })
